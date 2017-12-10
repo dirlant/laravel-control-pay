@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
   		public function __construct()
   		{
+        $auth = Auth::user();
+        if(!$auth)
+          return response()->json(['data' => $auth], 401);
   		}
   		/**
   		 * Display a listing of the resource.
@@ -18,13 +22,11 @@ class UserController extends Controller
   		 * @return Response
   		 */
   		public function index()
-  		{
-        $query = User::where('project_id', $id)
-                     ->where('enable', 1)
-                     ->get();
-  			if(!$query){
+  		{      
+        $query = User::all();
+        if(!$query)
   				return response()->json(['data' => $query, 'codigo' => 'Error 404'], 404);
-  			}
+
   			return response()->json([ 'msg' => 'ok', 'data' => $query], 200) ;
   		}
   		/**

@@ -13,19 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'PassportController@login');
+Route::post('/register', 'PassportController@register');
+
+Route::group(['middleware' => 'auth:api'], function(){
+
+    Route::get('details', 'PassportController@getDetails');
+
+    Route::get('user', 'UserController@index');
+
 });
-
-Route::post('/signup', 'AuthController@signup');
-Route::post('/login', 'AuthController@login');
-
-Route::resource('customer', 'CustomerController', [
-      'except' => [
-        'create', 'edit'
-      ]
-    ]
-  );
 
 Route::resource('project.monthly', 'MonthlyPaymentController', [
       'except' => [
@@ -47,10 +44,11 @@ Route::resource('customer.project', 'ProjectController', [
       ]
     ]
   );
-
+/*
 Route::resource('user', 'UserController', [
       'except' => [
         'edit', 'update', 'destroy'
       ]
     ]
   );
+*/
