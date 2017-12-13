@@ -11,6 +11,7 @@ class CustomerController extends Controller
 {
   		public function __construct()
   		{
+        $this->middleware('auth:api');
   		}
 
 
@@ -111,6 +112,8 @@ class CustomerController extends Controller
                            'email' => $req->get('email'),
                            'enable' => $req->get('enable')
                          ]);
+
+        $query = Customer::find($id);
 
         return response()->json(['data' => $query, 'msg' => 'ok =)'], 200) ;
 

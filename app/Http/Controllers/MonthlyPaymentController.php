@@ -11,6 +11,7 @@ class MonthlyPaymentController extends Controller
 {
   		public function __construct()
   		{
+        $this->middleware('auth:api');
   		}
 
 
@@ -119,6 +120,10 @@ class MonthlyPaymentController extends Controller
                                  'status' => $req->get('status'),
                                  'enable' => $req->get('enable')
                                ]);
+
+        $query = MonthlyPayment::where('id',$id_monthly)
+                               ->where('project_id', $id_project)
+                               ->get();
 
         return response()->json(['data' => $query, 'msg' => 'ok =)'], 200) ;
 

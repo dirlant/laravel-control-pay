@@ -11,6 +11,7 @@ class PaymentController extends Controller
 {
   		public function __construct()
   		{
+        $this->middleware('auth:api');
   		}
 
 
@@ -117,6 +118,10 @@ class PaymentController extends Controller
                           'amount' => $req->get('amount'),
                           'enable' => $req->get('enable')
                         ]);
+
+        $query = Payment::where('id',$id_payment)
+                        ->where('project_id', $id_project)
+                        ->get();
 
         return response()->json(['data' => $query, 'msg' => 'ok =)'], 200) ;
 

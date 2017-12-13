@@ -11,6 +11,7 @@ class ProjectController extends Controller
 {
   		public function __construct()
   		{
+        $this->middleware('auth:api');
   		}
 
 
@@ -117,7 +118,11 @@ class ProjectController extends Controller
                           'enable' => $req->get('enable')
                         ]);
 
-        return response()->json(['msg' => 'ok =)'], 200) ;
+        $query = Project::where('id',$id_project)
+                        ->where('client_id', $id_customer)
+                        ->get();
+
+        return response()->json(['data' => $query, 'msg' => 'ok =)'], 200) ;
 
   		}
 

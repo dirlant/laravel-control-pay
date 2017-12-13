@@ -24,6 +24,19 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 });
 
+Route::resource('customer', 'CustomerController', [
+      'except' => [
+        'create', 'edit'
+      ]
+    ]
+  );
+Route::resource('customer.project', 'ProjectController', [
+      'except' => [
+        'create', 'edit'
+      ]
+    ]
+  );
+
 Route::resource('project.monthly', 'MonthlyPaymentController', [
       'except' => [
         'create', 'edit'
@@ -38,12 +51,6 @@ Route::resource('project.payment', 'PaymentController', [
     ]
   );
 
-Route::resource('customer.project', 'ProjectController', [
-      'except' => [
-        'create', 'edit'
-      ]
-    ]
-  );
 /*
 Route::resource('user', 'UserController', [
       'except' => [
